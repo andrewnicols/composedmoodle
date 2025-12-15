@@ -22,6 +22,9 @@
             "Moodle\\BehatExtension": "lib/behat/extension/"
         }
     },
+    "extra": {
+        "haspublicdir": true
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
