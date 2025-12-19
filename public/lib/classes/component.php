@@ -156,6 +156,12 @@ class component {
                 require_once($path);
             }
         }
+
+        $vendordir = dirname(__DIR__, 3) . '/vendor';
+        $autoload = $vendordir . '/autoload.php';
+        if (file_exists($autoload)) {
+            require_once($autoload);
+        }
     }
 
     /**
@@ -497,8 +503,7 @@ class component {
         // Always keep moodle_exception in place.
         $keyclasses = [
             \core\exception\moodle_exception::class,
-            \core\navigation\navbar::class,
-            \core\navigation\navigation_node::class,
+            \core\telemetry::class,
         ];
         foreach ($keyclasses as $classname) {
             if (!array_key_exists($classname, $cache['classmap'])) {
