@@ -85,7 +85,7 @@
         "ext-soap": "Enabling SOAP PHP extension is useful for web services and some plugins.",
         "ext-exif": "Enabling Exif PHP extension is recommended, it is used by Moodle to parse image meta data."
     },
-    "provides": {
+    "provide": {
         "moodle/lms": "5.2"
     },
     "config": {
