@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "153f199a4a0c090fe9ed76adc1572eeb",
+    "content-hash": "d4dc4a7bf9d89f8c02c716f16cd742cf",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1473,6 +1473,57 @@
                 "source": "https://github.com/michelf/php-markdown/tree/2.0.0"
             },
             "time": "2022-09-26T12:21:08+00:00"
+        },
+        {
+            "name": "moodle/composer-installer",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moodle/composer-installer.git",
+                "reference": "763ee58c434c18195d12dc1b53e1063c9013ab44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moodle/composer-installer/zipball/763ee58c434c18195d12dc1b53e1063c9013ab44",
+                "reference": "763ee58c434c18195d12dc1b53e1063c9013ab44",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.7.8",
+                "composer/semver": "^3.4.4",
+                "phpstan/phpstan": "^2",
+                "phpstan/phpstan-phpunit": "^2",
+                "phpunit/phpunit": "^9.6.20"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Moodle\\Composer\\Plugin",
+                "plugin-modifies-install-path": true
+            },
+            "autoload": {
+                "psr-4": {
+                    "Moodle\\Composer\\": "src/Composer"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "A Composer Installer Plugin for Moodle",
+            "keywords": [
+                "composer",
+                "installer",
+                "moodle"
+            ],
+            "support": {
+                "issues": "https://github.com/moodle/composer-installer/issues",
+                "source": "https://github.com/moodle/composer-installer/tree/v1.0.0"
+            },
+            "time": "2025-12-17T14:49:00+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",

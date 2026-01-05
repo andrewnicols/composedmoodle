@@ -75,7 +75,8 @@
         "psr/simple-cache": "^3.0",
         "mtdowling/jmespath.php": "^2.8",
         "psr/event-dispatcher": "^1.0",
-        "symfony/console": "^7.3"
+        "symfony/console": "^7.3",
+        "moodle/composer-installer": "^1.0"
     },
     "suggest": {
         "ext-mysqli": "needed when moodle uses mysql or mariadb database.",
@@ -90,7 +91,8 @@
     },
     "config": {
         "allow-plugins": {
-            "cweagans/composer-patches": true
+            "cweagans/composer-patches": true,
+            "moodle/composer-installer": false
         }
     }
 }
