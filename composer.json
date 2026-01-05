@@ -23,7 +23,15 @@
         }
     },
     "extra": {
-        "haspublicdir": true
+        "haspublicdir": true,
+        "patches": {
+            "phpoffice/phpspreadsheet": [
+                {
+                    "description": "Use Moodle-specific temp directory",
+                    "url": "https://raw.githubusercontent.com/andrewnicols/moodle-patches/refs/heads/main/patches/phpoffice/phpspreadsheet/MDL-35356-src-phpspreadsheet-shared-file-php.patch"
+                }
+            ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -76,7 +84,8 @@
         "mtdowling/jmespath.php": "^2.8",
         "psr/event-dispatcher": "^1.0",
         "symfony/console": "^7.3",
-        "moodle/composer-installer": "^1.0"
+        "moodle/composer-installer": "^1.0",
+        "phpoffice/phpspreadsheet": "^5.3"
     },
     "suggest": {
         "ext-mysqli": "needed when moodle uses mysql or mariadb database.",

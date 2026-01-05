@@ -1,4 +1,17 @@
 {
-    "_hash": "6142bfcb78f54dfbf5247ae5e463f25bdb8fff1890806e2e45aa81a59c211653",
-    "patches": []
+    "_hash": "843a3f46a2b3ed4e0037df35aed1b67b84ba4be06663a6a703f033b69bd308f1",
+    "patches": {
+        "phpoffice/phpspreadsheet": [
+            {
+                "package": "phpoffice/phpspreadsheet",
+                "description": "Use Moodle-specific temp directory",
+                "url": "https://raw.githubusercontent.com/andrewnicols/moodle-patches/refs/heads/main/patches/phpoffice/phpspreadsheet/MDL-35356-src-phpspreadsheet-shared-file-php.patch",
+                "sha256": "01fd0a59d490a85b438463ea3b050b95881ff3118b027af46d91c9907e0ecde7",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ]
+    }
 }
