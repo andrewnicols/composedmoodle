@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dcfbdf14a6f8c9dcd084ac8188bb1a0",
-    "packages": [],
+    "content-hash": "13f8c8d4d9120d7fd06d825580eed8d9",
+    "packages": [
+        {
+            "name": "moodle/composer-installer",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moodle/composer-installer.git",
+                "reference": "e1f33359e0a2997f33af47c5b41e67e0573fd21b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moodle/composer-installer/zipball/e1f33359e0a2997f33af47c5b41e67e0573fd21b",
+                "reference": "e1f33359e0a2997f33af47c5b41e67e0573fd21b",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.7.8",
+                "composer/semver": "^3.4.4",
+                "phpstan/phpstan": "^2",
+                "phpstan/phpstan-phpunit": "^2",
+                "phpunit/phpunit": "^9.6.20"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Moodle\\Composer\\Plugin",
+                "plugin-modifies-install-path": true
+            },
+            "autoload": {
+                "psr-4": {
+                    "Moodle\\Composer\\": "src/Composer"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "A Composer Installer Plugin for Moodle",
+            "keywords": [
+                "composer",
+                "installer",
+                "moodle"
+            ],
+            "support": {
+                "issues": "https://github.com/moodle/composer-installer/issues",
+                "source": "https://github.com/moodle/composer-installer/tree/v1.1.0"
+            },
+            "time": "2025-12-23T04:39:26+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "behat/behat",
