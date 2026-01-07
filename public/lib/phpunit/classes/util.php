@@ -534,11 +534,21 @@ class phpunit_util extends testing_util {
     public static function build_config_file() {
         global $CFG;
 
+        if (\Composer\InstalledVersions::isInstalled('moodle/lms')) {
+            // Moodle is installed as a composer package.
+            $packageroot = realpath(\Composer\InstalledVersions::getRootPackage()['install_path']);
+            $moodleroot = basename(\Composer\InstalledVersions::getInstallPath('moodle/lms'));
+        } else {
+            // The moodle root is the root directory.
+            $packageroot = realpath($CFG->root);
+            $moodleroot = '';
+        }
+
         $template = <<<EOF
             <testsuite name="@component@_testsuite">
-              <directory suffix="_test.php">public/@dir@</directory>
-              <exclude>public/@dir@/classes</exclude>
-              <exclude>public/@dir@/fixtures</exclude>
+              <directory suffix="_test.php">[ROOT]public/@dir@</directory>
+              <exclude>[ROOT]public/@dir@/classes</exclude>
+              <exclude>[ROOT]public/@dir@/fixtures</exclude>
             </testsuite>
 
         EOF;
@@ -560,7 +570,7 @@ class phpunit_util extends testing_util {
             }
 
             $dir = substr($fulldir, strlen($CFG->dirroot) + 1);
-            if ($coverageinfo = self::get_coverage_info($fulldir)) {
+            if ($coverageinfo = self::get_coverage_info($fulldir, $moodleroot)) {
                 $includelists = array_merge($includelists, $coverageinfo->get_includelists("public/{$dir}"));
                 $excludelists = array_merge($excludelists, $coverageinfo->get_excludelists("public/{$dir}"));
             }
@@ -586,7 +596,7 @@ class phpunit_util extends testing_util {
 
                 $suites .= $suite;
 
-                if ($coverageinfo = self::get_coverage_info($plugindir)) {
+                if ($coverageinfo = self::get_coverage_info($plugindir, $moodleroot)) {
                     $includelists = array_merge($includelists, $coverageinfo->get_includelists("public/{$dir}"));
                     $excludelists = array_merge($excludelists, $coverageinfo->get_excludelists("public/{$dir}"));
                 }
@@ -604,14 +614,15 @@ class phpunit_util extends testing_util {
             '<const name="PHPUNIT_SEQUENCE_START" value="' . $sequencestart . '"/>',
             $data
         );
+        $data = str_replace('[ROOT]', "{$moodleroot}/", $data);
 
         $coverages = self::get_coverage_config($includelists, $excludelists);
         $data = preg_replace('| *<!--@coveragelist@-->|s', trim($coverages, "\n"), $data);
 
         $result = false;
-        if (is_writable($CFG->dirroot)) {
-            if ($result = file_put_contents("$CFG->root/phpunit.xml", $data)) {
-                testing_fix_file_permissions("$CFG->root/phpunit.xml");
+        if (is_writable($packageroot)) {
+            if ($result = file_put_contents("$packageroot/phpunit.xml", $data)) {
+                testing_fix_file_permissions("$packageroot/phpunit.xml");
             }
         }
 
@@ -665,7 +676,7 @@ class phpunit_util extends testing_util {
             $fcontents = str_replace('<!--@component_suite@-->', $ctemplate, $ftemplate);
 
             // Check for coverage configurations.
-            if ($coverageinfo = self::get_coverage_info($cpath)) {
+            if ($coverageinfo = self::get_coverage_info($cpath, $moodleroot)) {
                 $coverages = self::get_coverage_config($coverageinfo->get_includelists(''), $coverageinfo->get_excludelists(''));
             } else {
                 $coverages = $coveragedefault;
@@ -1049,21 +1060,26 @@ class phpunit_util extends testing_util {
     /**
      * Get the phpunit_coverage_info for the specified plugin or subsystem directory.
      *
-     * @param   string  $fulldir The directory to find the coverage info file in.
+     * @param   string  $fulldir The directory to find the coverage info file in
+     * @param   string $moodleroot The base directory that Moodle is in relative to root package composer.json
      * @return  phpunit_coverage_info
      */
-    protected static function get_coverage_info(string $fulldir): phpunit_coverage_info {
+    protected static function get_coverage_info(
+        string $fulldir,
+        string $moodleroot,
+    ): phpunit_coverage_info {
         $coverageconfig = "{$fulldir}/tests/coverage.php";
         if (file_exists($coverageconfig)) {
             $coverageinfo = require($coverageconfig);
             if (!$coverageinfo instanceof phpunit_coverage_info) {
                 throw new \coding_exception("{$coverageconfig} does not return a phpunit_coverage_info");
             }
-
-            return $coverageinfo;
+        } else {
+            $coverageinfo = new phpunit_coverage_info();
         }
 
-        return new phpunit_coverage_info();
+        $coverageinfo->set_basedir($moodleroot);
+        return $coverageinfo;
     }
 
     /**

@@ -23,7 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class phpunit_coverage_info {
-
     /** @var array The list of folders relative to the plugin root to include in coverage generation. */
     protected $includelistfolders = [];
 
@@ -35,6 +34,18 @@ class phpunit_coverage_info {
 
     /** @var array The list of files relative to the plugin root to exclude from coverage generation. */
     protected $excludelistfiles = [];
+
+    /** @var string The base directory to use */
+    protected string $basedir = "";
+
+    /**
+     * Specify the base directory to use for coverage.
+     *
+     * @param string $basedir
+     */
+    final public function set_basedir(string $basedir): void {
+        $this->basedir = trim($basedir, '/') . "/";
+    }
 
     /**
      * Get the formatted XML list of files and folders to include.
@@ -63,11 +74,11 @@ class phpunit_coverage_info {
         }
 
         foreach (array_unique($includelistfolders) as $folder) {
-            $coverages[] = html_writer::tag('directory', "{$plugindir}{$folder}", ['suffix' => '.php']);
+            $coverages[] = html_writer::tag('directory', "{$this->basedir}{$plugindir}{$folder}", ['suffix' => '.php']);
         }
 
         foreach (array_unique($includelistfiles) as $file) {
-            $coverages[] = html_writer::tag('file', "{$plugindir}{$file}");
+            $coverages[] = html_writer::tag('file', "{$this->basedir}{$plugindir}{$file}");
         }
 
         return $coverages;
