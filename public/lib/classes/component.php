@@ -114,14 +114,11 @@ class component {
     ];
     /** @var array<string|array<string>> associative array of PRS-4 namespaces and corresponding paths. */
     protected static $psr4namespaces = [
-        \Complex::class => 'public/lib/phpspreadsheet/markbaker/complex/classes/src',
         \IMSGlobal\LTI::class => 'public/lib/ltiprovider/src',
-        \Matrix::class => 'public/lib/phpspreadsheet/markbaker/matrix/classes/src',
         \MoodleHQ::class => [
             'public/lib/rtlcss/src/MoodleHQ',
         ],
         \Packback\Lti1p3::class => 'public/lib/lti1p3/src',
-        \PhpOffice\PhpSpreadsheet::class => 'public/lib/phpspreadsheet/phpspreadsheet/src/PhpSpreadsheet',
         \Phpml::class => 'public/lib/mlbackend/php/phpml/src/Phpml',
         \ScssPhp\ScssPhp::class => 'public/lib/scssphp/src',
     ];
@@ -142,9 +139,9 @@ class component {
      * Register the Moodle class autoloader.
      */
     public static function register_autoloader(): void {
-        if (is_file(dirname(__DIR__, 3) . '/vendor/autoload.php')) {
-            require_once(dirname(__DIR__, 3) . '/vendor/autoload.php');
-        }
+        // Include the Composer autoloader.
+        require_once(dirname(__DIR__, 3) . '/autoload.php');
+
         if (defined('COMPONENT_CLASSLOADER')) {
             spl_autoload_register(COMPONENT_CLASSLOADER);
         } else {
@@ -158,12 +155,6 @@ class component {
             if (file_exists($path)) {
                 require_once($path);
             }
-        }
-
-        $vendordir = dirname(__DIR__, 3) . '/vendor';
-        $autoload = $vendordir . '/autoload.php';
-        if (file_exists($autoload)) {
-            require_once($autoload);
         }
     }
 

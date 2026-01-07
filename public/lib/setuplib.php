@@ -79,10 +79,7 @@ function get_whoops(): ?\Whoops\Run {
         return null;
     }
 
-    $composerautoload = "{$CFG->dirroot}/../vendor/autoload.php";
-    if (file_exists($composerautoload)) {
-        require_once($composerautoload);
-    }
+    require_once(dirname(__DIR__, 2) . '/autoload.php');
 
     if (!class_exists(\Whoops\Run::class)) {
         return null;

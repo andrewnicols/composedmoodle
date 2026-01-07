@@ -34,6 +34,7 @@ define('IGNORE_COMPONENT_CACHE', true);
 // the Behat environment), so in case user has set tne environment variable, disable it.
 putenv('BEHAT_CLI=0');
 
+require_once(dirname(__DIR__, 5) . '/autoload.php');
 require_once(__DIR__ . '/../../../../lib/clilib.php');
 require_once(__DIR__ . '/../../../../lib/phpunit/bootstraplib.php');
 require_once(__DIR__ . '/../../../../lib/testing/lib.php');
@@ -55,11 +56,7 @@ require_once(__DIR__ . '/../../../../lib/testing/lib.php');
 );
 
 // Basic check to see if phpunit is installed.
-if (
-    !file_exists(__DIR__ . '/../../../../../vendor/phpunit/phpunit/composer.json')
-    || !file_exists(__DIR__ . '/../../../../../vendor/bin/phpunit')
-    || !file_exists(__DIR__ . '/../../../../../vendor/autoload.php')
-) {
+if (!class_exists(\PHPUnit\TextUI\Application::class)) {
     phpunit_bootstrap_error(PHPUNIT_EXITCODE_PHPUNITMISSING);
 }
 
@@ -85,7 +82,6 @@ if ($options['run']) {
 define('PHPUNIT_UTIL', true);
 
 testing_pre_composer_init();
-require(__DIR__ . '/../../../../../vendor/autoload.php');
 require(__DIR__ . '/../../../../lib/phpunit/bootstrap.php');
 
 // From now on this is a regular moodle CLI_SCRIPT.

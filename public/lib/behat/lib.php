@@ -530,7 +530,7 @@ function behat_get_run_process() {
  * @return array list of processes.
  */
 function cli_execute_parallel($cmds, $cwd = null, $delay = 0) {
-    require_once(__DIR__ . "/../../../vendor/autoload.php");
+    require_once(__DIR__ . "/../../../autoload.php");
 
     $processes = array();
 

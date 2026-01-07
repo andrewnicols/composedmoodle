@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72262ce1f2ea8e1d069d99e703b6ea22",
+    "content-hash": "e2853f4d919d79c52d2f37c8035333c9",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.369.6",
+            "version": "3.369.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "b1e1846a4b6593b6916764d86fc0890a31727370"
+                "reference": "2fa2011e2adc8e70b15b17c50d598fc44fc3106a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b1e1846a4b6593b6916764d86fc0890a31727370",
-                "reference": "b1e1846a4b6593b6916764d86fc0890a31727370",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2fa2011e2adc8e70b15b17c50d598fc44fc3106a",
+                "reference": "2fa2011e2adc8e70b15b17c50d598fc44fc3106a",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.369.6"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.369.8"
             },
-            "time": "2026-01-02T19:09:23+00:00"
+            "time": "2026-01-06T19:10:11+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -4850,6 +4850,44 @@
                 "wiki": "https://github.com/bovigo/vfsStream/wiki"
             },
             "time": "2024-08-29T18:43:31+00:00"
+        },
+        {
+            "name": "moodle/moodle-testing",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andrewnicols/moodle-testing.git",
+                "reference": "1ccda1c03f65c8d0f30fdcf77c95e0d1ffd3f971"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andrewnicols/moodle-testing/zipball/1ccda1c03f65c8d0f30fdcf77c95e0d1ffd3f971",
+                "reference": "1ccda1c03f65c8d0f30fdcf77c95e0d1ffd3f971",
+                "shasum": ""
+            },
+            "require": {
+                "behat/behat": "^3",
+                "behat/mink": "^1.11.0",
+                "behat/mink-browserkit-driver": "^2.2.0",
+                "friends-of-behat/mink-extension": "^2.7.5",
+                "mikey179/vfsstream": "^1.6",
+                "moodle/lms": "^5.1-",
+                "oleg-andreyev/mink-phpwebdriver": "1.3.*",
+                "phpunit/phpunit": "^11",
+                "symfony/http-client": "^4.4 || ^5.0 || ^6.0 || ^7.0",
+                "symfony/mime": "^4.4 || ^5.0 || ^6.0 || ^7.0",
+                "symfony/process": "^4.4 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "type": "metapackage",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Test dependencies for Moodle installations",
+            "support": {
+                "source": "https://github.com/andrewnicols/moodle-testing/tree/v1.0.2",
+                "issues": "https://github.com/andrewnicols/moodle-testing/issues"
+            },
+            "time": "2026-01-07T03:56:51+00:00"
         },
         {
             "name": "myclabs/deep-copy",

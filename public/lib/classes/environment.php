@@ -31,25 +31,12 @@ class environment {
      * @return \environment_results|null
      */
     public static function check_composer_dependencies_installed(\environment_results $result): ?\environment_results {
-        // Check if the composer vendor directory exists.
-        $vendorpath = static::get_vendor_path();
-        if (!is_dir($vendorpath)) {
-            $result->setInfo('Composer vendor directory not found');
-            $result->setFeedbackStr('composernotfound');
-            return $result;
-        }
+        // Since Moodle 5.2 an autoload.php always exists in the Moodle root.
+        // It should be loaded already, but load here just in case.
+        require_once(dirname(__DIR__, 3) . '/autoload.php');
 
-        // Check if the composer autoload file exists.
-        $autoloadpath = "{$vendorpath}/autoload.php";
-        if (!is_file($autoloadpath)) {
-            $result->setInfo('Composer autoload file not found');
-            $result->setFeedbackStr('composernotfound');
-            return $result;
-        }
-
-        // Check if the installed.php file exists in the composer directory.
-        $installedpath = "{$vendorpath}/composer/installed.php";
-        if (!is_file($installedpath)) {
+        // And check if the Composer Installedersions class exists.
+        if (!class_exists(\Composer\InstalledVersions::class)) {
             $result->setInfo('Composer installed data not found');
             $result->setFeedbackStr('composernotfound');
             return $result;
@@ -72,19 +59,7 @@ class environment {
             return null; // Skip this check in developer mode.
         }
 
-        $vendorpath = static::get_vendor_path();
-        if (!is_dir($vendorpath)) {
-            return null; // No vendor directory, so no developer dependencies to check.
-        }
-
-        // Check if the installed.php file exists in the composer directory.
-        $installedpath = "{$vendorpath}/composer/installed.php";
-        if (!is_file($installedpath)) {
-            return null; // No installed file, so no developer dependencies to check.
-        }
-
-        // Check if developer dependencies have been installed too.
-        $installed = include($installedpath);
+        $installed = \Composer\InstalledVersions::getRawData();
         if (is_array($installed) && array_key_exists('root', $installed)) {
             if ($installed['root']['dev']) {
                 $result->setInfo('Composer Developer dependencies are installed');
@@ -106,12 +81,31 @@ class environment {
     public static function check_composer_dependencies_optimised(
         \environment_results $result
     ): ?\environment_results {
-        $vendorpath = static::get_vendor_path();
-        if (!is_dir($vendorpath)) {
-            return null; // No vendor directory, so no developer dependencies to check.
+        if (!class_exists(\Composer\Autoload\ClassLoader::class)) {
+            return null; // No Composer ClassLoader found, skip this check.
         }
 
-        $autoloader = require("{$vendorpath}/autoload.php");
+        $loaders = \Composer\Autoload\ClassLoader::getRegisteredLoaders();
+
+        if (\Composer\InstalledVersions::isInstalled('moodle/lms')) {
+            // Moodle is installed via Composer.
+            $checkin = \Composer\InstalledVersions::getRootPackage()['install_path'] . '/vendor';
+        } else {
+            // Moodle is not installed via Composer.
+            // The autoloader should be in the rootdir's vendor directory.
+            $checkin = dirname(__DIR__, 3) . '/vendor';
+        }
+
+        $checkin = realpath($checkin);
+
+        if (!array_key_exists($checkin, $loaders)) {
+            return null; // No autoloader found in expected location, skip this check.
+        }
+        $autoloader = $loaders[$checkin];
+
+        if ($autoloader === null) {
+            return null; // No autoloader found, skip this check.
+        }
 
         if (static::is_developer_mode_enabled()) {
             if ($autoloader->isClassMapAuthoritative()) {
